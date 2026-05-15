@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sober — termos legais</title>
+<meta name="description" content="política de privacidade e termos de uso do Sober.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* Mesmas variáveis da landing principal */
+    --sober-bg:           #1C1C1C;
+    --sober-bg-deep:      #0A0A0A;
+    --sober-surface:      #1A1A1A;
+    --sober-surface-raised:#1E1E1E;
+    --sober-border:       #2A2A2A;
+    --sober-border-soft:  rgba(255,255,255,0.05);
+
+    --sober-text:         #FFFFFF;
+    --sober-text-secondary:#AAAAAA;
+    --sober-text-muted:   #666666;
+    --sober-text-dim:     #444444;
+
+    --sober-accent:       #E24B4A;
+    --sober-success:      #5DCA5D;
+
+    --sans:    'Inter', -apple-system, sans-serif;
+    --mono:    'Geist Mono', monospace;
+    --pixel:   'Press Start 2P', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--sober-bg);
+    color: var(--sober-text);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ─── Nav ─── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(28,28,28,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sober-border-soft);
+  }
+
+  .nav-inner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .logo {
+    font-family: var(--pixel);
+    font-size: 12px;
+    color: var(--sober-text);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+  }
+
+  .back-link {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sober-text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .back-link:hover {
+    color: var(--sober-accent);
+  }
+
+  /* ─── Hero ─── */
+  .hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 32px 48px;
+    border-bottom: 1px solid var(--sober-border-soft);
+  }
+
+  .section-index {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sober-accent);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-index::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--sober-accent);
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 16px;
+    text-transform: lowercase;
+  }
+
+  .hero p.lead {
+    font-size: 17px;
+    color: var(--sober-text-secondary);
+    max-width: 560px;
+    line-height: 1.6;
+  }
+
+  .hero .anchors {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero .anchor-pill {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--sober-text-secondary);
+    text-decoration: none;
+    padding: 8px 14px;
+    border: 1px solid var(--sober-border);
+    border-radius: 6px;
+    transition: all 0.2s;
+  }
+
+  .hero .anchor-pill:hover {
+    color: var(--sober-accent);
+    border-color: var(--sober-accent);
+  }
+
+  /* ─── Section ─── */
+  .legal-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 64px 32px;
+    border-bottom: 1px solid var(--sober-border-soft);
+  }
+
+  .legal-section:last-of-type {
+    border-bottom: none;
+  }
+
+  .legal-section .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sober-text-muted);
+    margin-bottom: 12px;
+  }
+
+  .legal-section h2 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 8px;
+    text-transform: lowercase;
+  }
+
+  .date {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--sober-text-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .legal-section h3 {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--sober-text);
+    margin: 36px 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .legal-section p {
+    font-size: 15px;
+    color: var(--sober-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .legal-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 24px;
+  }
+
+  .legal-section ul li {
+    font-size: 15px;
+    color: var(--sober-text-secondary);
+    line-height: 1.7;
+    padding: 8px 0 8px 24px;
+    position: relative;
+  }
+
+  .legal-section ul li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--sober-accent);
+    font-weight: 700;
+  }
+
+  .legal-section strong {
+    color: var(--sober-text);
+    font-weight: 600;
+  }
+
+  .legal-section a {
+    color: var(--sober-accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(226,75,74,0.3);
+    transition: border-color 0.2s;
+  }
+
+  .legal-section a:hover {
+    border-bottom-color: var(--sober-accent);
+  }
+
+  /* ─── Divider entre seções ─── */
+  .section-divider {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-divider .line {
+    flex: 1;
+    height: 1px;
+    background: var(--sober-border-soft);
+  }
+
+  .section-divider .mark {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--sober-text-dim);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  /* ─── Footer ─── */
+  footer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 32px;
+    border-top: 1px solid var(--sober-border-soft);
+    text-align: center;
+  }
+
+  footer p {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--sober-text-dim);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  footer a {
+    color: var(--sober-text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  footer a:hover {
+    color: var(--sober-accent);
+    border-bottom-color: var(--sober-accent);
+  }
+
+  /* ─── Mobile ─── */
+  @media (max-width: 640px) {
+    .hero { padding: 56px 20px 40px; }
+    .legal-section { padding: 48px 20px; }
+    .nav-inner { padding: 16px 20px; }
+    footer { padding: 36px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">sober</a>
+    <a href="/" class="back-link">← voltar pra home</a>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <p class="section-index">[ legal · 01/02 ]</p>
+  <h1>termos legais</h1>
+  <p class="lead">transparência sobre quais dados o sober coleta, como funciona e quais são seus direitos. lemos antes de assinar, escrevemos pra você ler.</p>
+
+  <div class="anchors">
+    <a href="#privacidade" class="anchor-pill">↓ política de privacidade</a>
+    <a href="#termos" class="anchor-pill">↓ termos de uso</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     PRIVACIDADE
+═══════════════════════════════════════════════════════════════════ -->
+<section id="privacidade" class="legal-section">
+  <p class="label">[ 01 / 02 ] · privacidade</p>
+  <h2>política de privacidade</h2>
+  <p class="date">última atualização · 15 de maio de 2026</p>
+
+  <p>o <strong>Sober</strong> respeita sua privacidade. esta política explica quais dados coletamos, como os usamos e quais são seus direitos.</p>
+
+  <h3>1. dados que coletamos</h3>
+  <ul>
+    <li><strong>conta:</strong> e-mail e senha (armazenada como hash bcrypt — nunca em texto puro).</li>
+    <li><strong>autenticação:</strong> tokens JWT armazenados localmente no dispositivo para manter sua sessão ativa.</li>
+    <li><strong>sobriedade:</strong> tipo de vício, data de início, dias consecutivos, total de dias limpos, confirmações diárias e gasto mensal declarado.</li>
+    <li><strong>metas financeiras:</strong> nome da meta e valor total.</li>
+  </ul>
+  <p>não coletamos localização, contatos, fotos ou qualquer dado do dispositivo além do necessário para o funcionamento do app.</p>
+
+  <h3>2. nome fictício</h3>
+  <p>ao criar sua conta, o sober gera automaticamente um <strong>nome fictício aleatório</strong> (ex.: "Lobo Claro") para proteger sua identidade. seu nome real nunca é solicitado.</p>
+
+  <h3>3. como usamos seus dados</h3>
+  <ul>
+    <li>manter seu progresso de sobriedade sincronizado entre dispositivos.</li>
+    <li>calcular economias estimadas com base no gasto mensal declarado.</li>
+    <li>nenhum dado é vendido, compartilhado com terceiros ou usado para publicidade.</li>
+  </ul>
+
+  <h3>4. provedores terceirizados</h3>
+  <p>para operar o app, utilizamos serviços de terceiros confiáveis:</p>
+  <ul>
+    <li><strong>Railway:</strong> infraestrutura de hospedagem do backend e banco de dados PostgreSQL.</li>
+    <li><strong>Resend:</strong> envio de emails transacionais (recuperação de senha, comunicações de conta).</li>
+    <li><strong>Sentry:</strong> monitoramento de erros do aplicativo (não armazena dados pessoais identificáveis).</li>
+  </ul>
+  <p>nenhum desses provedores tem acesso aos seus dados de sobriedade ou metas financeiras além do necessário para o funcionamento do serviço.</p>
+
+  <h3>5. armazenamento e segurança</h3>
+  <ul>
+    <li>dados armazenados em banco PostgreSQL com conexão SSL.</li>
+    <li>senhas protegidas com bcrypt (custo 12).</li>
+    <li>autenticação via tokens JWT.</li>
+    <li>comunicação exclusivamente via HTTPS.</li>
+    <li>rate limiting para proteção contra ataques de força bruta.</li>
+  </ul>
+
+  <h3>6. seus direitos (LGPD)</h3>
+  <ul>
+    <li><strong>acesso:</strong> você pode visualizar todos os seus dados a qualquer momento dentro do app.</li>
+    <li><strong>exclusão:</strong> você pode excluir sua conta e todos os dados associados diretamente pelo app. a exclusão é imediata e irreversível.</li>
+    <li><strong>portabilidade:</strong> entre em contato para solicitar exportação dos seus dados.</li>
+  </ul>
+
+  <h3>7. contato</h3>
+  <p>para dúvidas sobre privacidade: <a href="mailto:contato@soberapp.com.br">contato@soberapp.com.br</a></p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     DIVIDER
+═══════════════════════════════════════════════════════════════════ -->
+<div class="section-divider">
+  <div class="line"></div>
+  <span class="mark">/ / /</span>
+  <div class="line"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     TERMOS DE USO
+═══════════════════════════════════════════════════════════════════ -->
+<section id="termos" class="legal-section">
+  <p class="label">[ 02 / 02 ] · termos</p>
+  <h2>termos de uso</h2>
+  <p class="date">última atualização · 15 de maio de 2026</p>
+
+  <p>ao usar o <strong>sober</strong>, você concorda com os termos abaixo.</p>
+
+  <h3>1. o que o sober faz</h3>
+  <p>o sober é um aplicativo de acompanhamento pessoal de sobriedade. ele ajuda você a registrar e visualizar seu progresso, calcular economias estimadas e definir metas financeiras.</p>
+
+  <h3>2. o que o sober não faz</h3>
+  <ul>
+    <li>o sober <strong>não é</strong> um serviço médico, terapêutico ou de aconselhamento.</li>
+    <li>o app não substitui acompanhamento profissional de saúde.</li>
+    <li>nenhuma informação no app deve ser interpretada como orientação médica.</li>
+  </ul>
+
+  <h3>3. sua conta</h3>
+  <ul>
+    <li>você é responsável por manter suas credenciais seguras.</li>
+    <li>cada pessoa deve ter sua própria conta.</li>
+    <li>você pode excluir sua conta a qualquer momento — a exclusão é permanente.</li>
+  </ul>
+
+  <h3>4. uso aceitável</h3>
+  <p>você concorda em não:</p>
+  <ul>
+    <li>tentar acessar contas de outros usuários.</li>
+    <li>sobrecarregar o serviço com requisições automatizadas.</li>
+    <li>usar o app para qualquer finalidade ilegal.</li>
+  </ul>
+
+  <h3>5. disponibilidade</h3>
+  <p>o sober é fornecido "como está". faremos nosso melhor para manter o serviço disponível, mas não garantimos disponibilidade ininterrupta. podemos descontinuar o serviço com aviso prévio de 60 dias, durante os quais você poderá exportar seus dados.</p>
+
+  <h3>6. propriedade intelectual</h3>
+  <p>o código, design e marca do sober são de propriedade de seus criadores. seus dados pessoais pertencem a você.</p>
+
+  <h3>7. alterações</h3>
+  <p>podemos atualizar estes termos. alterações significativas serão comunicadas pelo app. o uso continuado após a notificação constitui aceitação.</p>
+
+  <h3>8. contato</h3>
+  <p>para dúvidas: <a href="mailto:contato@soberapp.com.br">contato@soberapp.com.br</a></p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════════ -->
+<footer>
+  <p>sober · brasília · 2026 · feito com cuidado</p>
+  <p><a href="/">← voltar pra home</a></p>
+</footer>
+
+</body>
+</html>

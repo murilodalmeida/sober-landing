@@ -1,244 +1,1303 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sober — Política de Privacidade e Termos de Uso</title>
-  <style>
-    :root {
-      --bg: #0f1117;
-      --surface: #1a1d27;
-      --text: #e4e4e7;
-      --muted: #a1a1aa;
-      --accent: #6d28d9;
-      --accent-light: #8b5cf6;
-      --border: #27272a;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sober — Design System v3.0 · Ops Manual</title>
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+<!--
+═══════════════════════════════════════════════════════════════════════════════
+  SOBER · DESIGN SYSTEM v3.0 — "OPS MANUAL"
+  ─────────────────────────────────────────────────────────────────────────────
+  Base pra o Claude Code polir. Mantém 100% a alma do v2 (dark, lowercase,
+  paleta de ranks, JetBrains Mono em labels, beam borders, pixel art Nano)
+  e amplifica com:
+    1. Tipografia colossal (8–12rem) nos heros — referência Degenerate Ape
+    2. Ghost type "sober" no fundo em pixel font — referência Pixel Rise
+    3. Tech-ops headers com counters mono e numeração [NN/NN]
+    4. NOVAS seções de FEATURES, SCREENS e MONETIZAÇÃO
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      padding: 0 1rem;
-    }
+  TODO PRA O CLAUDE CODE — ver bloco no final do arquivo (seção 11).
+═══════════════════════════════════════════════════════════════════════════════
+-->
 
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 3rem 0 4rem;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 
-    header {
-      text-align: center;
-      margin-bottom: 3rem;
-      padding-bottom: 2rem;
-      border-bottom: 1px solid var(--border);
-    }
+<style>
+  :root {
+    /* ── Background tiers ── */
+    --sober-bg:           #1C1C1C;
+    --sober-bg-deep:      #0A0A0A;
+    --sober-surface:      #1A1A1A;
+    --sober-surface-raised:#1E1E1E;
+    --sober-border:       #2A2A2A;
+    --sober-border-soft:  rgba(255,255,255,0.05);
 
-    header h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-    }
+    /* ── Text tiers ── */
+    --sober-text:         #FFFFFF;
+    --sober-text-secondary:#AAAAAA;
+    --sober-text-muted:   #666666;
+    --sober-text-dim:     #444444;
 
-    header p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
+    /* ── Accents ── */
+    --sober-accent:       #E24B4A;  /* rubi · CTA primário · urgência */
+    --sober-success:      #5DCA5D;  /* saúde · confirmação */
+    --sober-warning:      #D4A843;  /* emergência · atenção */
+    --sober-warning-dark: #8B6914;  /* bordas de emergência */
 
-    nav {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      margin-bottom: 3rem;
-    }
+    /* ── Rank colors (8 nanos) ── */
+    --rank-ferro:      #378ADD;
+    --rank-cobre:      #E8693A;
+    --rank-ouro:       #EF9F27;
+    --rank-rubi:       #E24B4A;
+    --rank-onix:       #7F77DD;
+    --rank-ascendente: #E24B4A;
+    --rank-mestre:     #8B2A2A;
+    --rank-lendario:   #FAC775;
 
-    nav a {
-      color: var(--accent-light);
-      text-decoration: none;
-      font-weight: 500;
-      padding: 0.5rem 1.25rem;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      transition: all 0.2s;
-    }
+    /* ── Type ── */
+    --sans:    'Inter', -apple-system, sans-serif;
+    --mono:    'Geist Mono', monospace;
+    --pixel:   'Press Start 2P', monospace;
 
-    nav a:hover {
-      background: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
-    }
+    /* ── Curves ── */
+    --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
 
-    section {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 2rem;
-    }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--sober-bg);
+    color: var(--sober-text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    line-height: 1.6;
+  }
+  ::selection { background: var(--sober-accent); color: white; }
 
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 1.5rem;
-      color: var(--accent-light);
-    }
+  /* ═══════════════════════════════════════════════
+     KEYFRAMES
+  ═══════════════════════════════════════════════ */
+  @keyframes fadeSlideIn {
+    0%   { opacity: 0; transform: translateY(30px); filter: blur(8px); }
+    100% { opacity: 1; transform: translateY(0);    filter: blur(0); }
+  }
+  @keyframes fadeIn {
+    0%   { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes nanoFloat {
+    0%, 100% { transform: translateY(0)    rotate(-6deg); }
+    50%      { transform: translateY(-6px) rotate(-6deg); }
+  }
+  @keyframes beam-drop {
+    0%   { transform: translateY(-100%); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateY(100%); opacity: 0; }
+  }
+  @keyframes beam-slide {
+    0%   { transform: translateX(-100%); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
+  }
+  @keyframes rankUpSpring {
+    0%   { transform: scale(0); }
+    60%  { transform: scale(1.15); }
+    80%  { transform: scale(0.95); }
+    100% { transform: scale(1); }
+  }
+  @keyframes progressFill {
+    from { width: 0; }
+  }
+  @keyframes blink {
+    0%, 49%   { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  @keyframes counterPulse {
+    0%, 100% { color: var(--sober-accent); }
+    50%      { color: var(--sober-text); }
+  }
+  @keyframes ghostDrift {
+    0%   { transform: translateX(-2%); }
+    100% { transform: translateX(2%); }
+  }
+  @keyframes float-1 {
+    0%, 100% { transform: translate(0, 0)      rotate(-4deg); }
+    50%      { transform: translate(8px, -14px) rotate(2deg); }
+  }
+  @keyframes float-2 {
+    0%, 100% { transform: translate(0, 0)       rotate(3deg); }
+    50%      { transform: translate(-10px, -10px) rotate(-3deg); }
+  }
+  @keyframes float-3 {
+    0%, 100% { transform: translate(0, 0)        rotate(-2deg); }
+    50%      { transform: translate(6px, -18px)   rotate(5deg); }
+  }
+  @keyframes float-4 {
+    0%, 100% { transform: translate(0, 0)        rotate(6deg); }
+    50%      { transform: translate(-8px, -8px)  rotate(-4deg); }
+  }
+  @keyframes float-5 {
+    0%, 100% { transform: translate(0, 0)        rotate(0deg); }
+    50%      { transform: translate(4px, -22px)  rotate(-6deg); }
+  }
+  @keyframes scanline {
+    0%   { transform: translateY(0); }
+    100% { transform: translateY(100vh); }
+  }
+  @keyframes verticalScroll {
+    0%   { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+  }
 
-    h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin: 1.5rem 0 0.75rem;
-    }
+  /* ═══════════════════════════════════════════════
+     ANIMATE-ON-SCROLL BOOTSTRAP
+  ═══════════════════════════════════════════════ */
+  .animate-on-scroll { animation-play-state: paused !important; }
+  .animate-on-scroll.animate { animation-play-state: running !important; }
 
-    p, li {
-      color: var(--muted);
-      margin-bottom: 0.75rem;
-    }
+  /* ═══════════════════════════════════════════════
+     PROFESSIONAL BACKGROUND (substitui o grid)
+     · gradient vertical suave + dot pattern minúsculo
+     · vinheta radial dá foco no centro
+  ═══════════════════════════════════════════════ */
+  .pro-bg {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(255,255,255,0.015), transparent 60%),
+      radial-gradient(ellipse at top left, rgba(255,255,255,0.01), transparent 50%),
+      linear-gradient(180deg, #111111 0%, #141414 50%, #0F0F0F 100%);
+  }
+  .pro-bg-dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, black 30%, transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+  }
 
-    ul {
-      padding-left: 1.5rem;
-    }
+  /* ═══════════════════════════════════════════════
+     HUD BRACKETS (referência Degenerate Ape — cantos)
+  ═══════════════════════════════════════════════ */
+  .hud-bracket {
+    position: absolute;
+    width: 28px; height: 28px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .hud-bracket::before, .hud-bracket::after {
+    content: '';
+    position: absolute;
+    background: rgba(255,255,255,0.25);
+  }
+  .hud-bracket.tl { top: 24px; left: 24px; }
+  .hud-bracket.tl::before { top: 0; left: 0; width: 16px; height: 1.5px; }
+  .hud-bracket.tl::after  { top: 0; left: 0; width: 1.5px; height: 16px; }
 
-    li {
-      margin-bottom: 0.4rem;
-    }
+  .hud-bracket.tr { top: 24px; right: 24px; }
+  .hud-bracket.tr::before { top: 0; right: 0; width: 16px; height: 1.5px; }
+  .hud-bracket.tr::after  { top: 0; right: 0; width: 1.5px; height: 16px; }
 
-    strong {
-      color: var(--text);
-    }
+  .hud-bracket.bl { bottom: 24px; left: 24px; }
+  .hud-bracket.bl::before { bottom: 0; left: 0; width: 16px; height: 1.5px; }
+  .hud-bracket.bl::after  { bottom: 0; left: 0; width: 1.5px; height: 16px; }
 
-    a {
-      color: var(--accent-light);
-    }
+  .hud-bracket.br { bottom: 24px; right: 24px; }
+  .hud-bracket.br::before { bottom: 0; right: 0; width: 16px; height: 1.5px; }
+  .hud-bracket.br::after  { bottom: 0; right: 0; width: 1.5px; height: 16px; }
 
-    .date {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 1.5rem;
-    }
+  /* ═══════════════════════════════════════════════
+     HUD VERTICAL LABEL (lateral · estilo "AA: 632 36T6 2123")
+  ═══════════════════════════════════════════════ */
+  .hud-vertical {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    color: rgba(255,255,255,0.18);
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    user-select: none;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .hud-vertical.left  { top: 50%; left: 32px;  transform: translateY(-50%) rotate(180deg); }
+  .hud-vertical.right { top: 50%; right: 32px; transform: translateY(-50%) rotate(180deg); }
 
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.85rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-    }
-  </style>
+  /* ═══════════════════════════════════════════════
+     HUD PATH TAB (referência Degenerate Ape "C:/DEGENERATE APE/OVERVIEW")
+  ═══════════════════════════════════════════════ */
+  .hud-path {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 4px;
+    padding: 6px 12px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.02);
+    color: var(--sober-text-secondary);
+  }
+  .hud-path .arrow { color: var(--sober-text-dim); }
+
+  /* ═══════════════════════════════════════════════
+     HUD HASH PATTERN (linhas diagonais decorativas)
+  ═══════════════════════════════════════════════ */
+  .hud-hash {
+    height: 6px;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.18) 0,
+      rgba(255,255,255,0.18) 1px,
+      transparent 1px,
+      transparent 5px
+    );
+  }
+
+  /* ═══════════════════════════════════════════════
+     SCAN LINE (passa muito sutil pela hero)
+  ═══════════════════════════════════════════════ */
+  .scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(180deg, transparent, rgba(226,75,74,0.04), transparent);
+    pointer-events: none;
+    animation: scanline 8s linear infinite;
+    z-index: 1;
+  }
+
+  /* ═══════════════════════════════════════════════
+     FLOATING NANO (criaturas pixel art que flutuam ao redor do celular)
+  ═══════════════════════════════════════════════ */
+  .nano-floater {
+    position: absolute;
+    image-rendering: pixelated;
+    -ms-interpolation-mode: nearest-neighbor;
+    will-change: transform;
+    filter: drop-shadow(0 8px 24px rgba(0,0,0,0.5));
+    z-index: 3;
+  }
+
+  /* ═══════════════════════════════════════════════
+     BEAM BORDERS (animated accent edges)
+     Kept for component reference section only
+  ═══════════════════════════════════════════════ */
+  .beam-border-v {
+    position: absolute; top: 0; bottom: 0; left: 0; width: 1px;
+    background: rgba(255,255,255,0.04); overflow: hidden; z-index: 10;
+  }
+  .beam-border-v::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent, var(--sober-accent), transparent);
+    transform: translateY(-100%);
+    animation: beam-drop 5s var(--ease-out-quint) infinite;
+    opacity: 0.7;
+  }
+  .beam-border-h {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: rgba(255,255,255,0.04); overflow: hidden; z-index: 10;
+  }
+  .beam-border-h::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to right, transparent, var(--sober-accent), transparent);
+    transform: translateX(-100%);
+    animation: beam-slide 7s var(--ease-out-quint) infinite;
+    animation-delay: 2.5s;
+    opacity: 0.7;
+  }
+
+  /* ═══════════════════════════════════════════════
+     CORNER GLOW (replaces beam borders in hero — subtle breathing pulse)
+  ═══════════════════════════════════════════════ */
+  @keyframes corner-breathe {
+    0%, 100% { opacity: 0.25; }
+    50%      { opacity: 0.6; }
+  }
+  .corner-glow {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    filter: blur(40px);
+    animation: corner-breathe 8s ease-in-out infinite;
+  }
+  .corner-glow.tl { top: -40px; left: -40px; background: rgba(255,255,255,0.06); }
+  .corner-glow.tr { top: -40px; right: -40px; background: rgba(255,255,255,0.05); animation-delay: 2s; }
+  .corner-glow.bl { bottom: -40px; left: -40px; background: rgba(255,255,255,0.04); animation-delay: 4s; }
+  .corner-glow.br { bottom: -40px; right: -40px; background: rgba(255,255,255,0.06); animation-delay: 6s; }
+
+  /* ═══════════════════════════════════════════════
+     DUAL PHONE OPAL LAYOUT
+  ═══════════════════════════════════════════════ */
+  .phone-duo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+  .phone-duo .phone-back {
+    position: absolute;
+    z-index: 3;
+    transform: rotate(-6deg) translateX(-90px) translateY(20px);
+    opacity: 0.88;
+    transition: transform 0.5s var(--ease-out-quint), opacity 0.5s ease;
+  }
+  .phone-duo .phone-front {
+    position: relative;
+    z-index: 4;
+    transform: rotate(3deg) translateX(60px) translateY(-15px);
+    transition: transform 0.5s var(--ease-out-quint);
+  }
+  .phone-duo:hover .phone-back {
+    transform: rotate(-8deg) translateX(-120px) translateY(20px);
+    opacity: 0.92;
+  }
+  .phone-duo:hover .phone-front {
+    transform: rotate(5deg) translateX(80px) translateY(-15px);
+  }
+  @media (max-width: 980px) {
+    .phone-duo .phone-back { transform: rotate(-4deg) translateX(-50px) translateY(12px); }
+    .phone-duo .phone-front { transform: rotate(2deg) translateX(35px) translateY(-8px); }
+    .phone-duo .phone-back .phone-frame { width: 180px !important; }
+    .phone-duo .phone-front .phone-frame { width: 210px !important; }
+  }
+
+  /* ═══════════════════════════════════════════════
+     GHOST TYPE (tipografia gigante de fundo — referência Pixel Rise)
+  ═══════════════════════════════════════════════ */
+  .ghost-type {
+    position: absolute;
+    font-family: var(--pixel);
+    color: rgba(255,255,255,0.025);
+    font-size: clamp(8rem, 22vw, 22rem);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.85;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    animation: ghostDrift 20s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+
+  /* ═══════════════════════════════════════════════
+     TECH-OPS HEADER (referência Degenerate Ape "TOTAL MODEL: 10 321")
+  ═══════════════════════════════════════════════ */
+  .ops-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--sober-text-muted);
+    text-transform: uppercase;
+  }
+  .ops-bar .hash {
+    flex: 1;
+    height: 8px;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      var(--sober-text-dim) 0,
+      var(--sober-text-dim) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+    opacity: 0.5;
+  }
+  .ops-bar .ops-pill {
+    border: 1px solid var(--sober-border);
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: var(--sober-text-secondary);
+    background: var(--sober-bg-deep);
+  }
+  .ops-bar .live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--sober-success);
+    box-shadow: 0 0 0 0 rgba(93,202,93,0.5);
+    animation: blink 1.6s ease-in-out infinite;
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  /* ═══════════════════════════════════════════════
+     SECTION INDEX (numeração estilo [01/10])
+  ═══════════════════════════════════════════════ */
+  .section-index {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    color: var(--sober-accent);
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .section-index::before {
+    content: ''; width: 24px; height: 1px;
+    background: var(--sober-accent);
+    display: inline-block;
+  }
+
+  /* ═══════════════════════════════════════════════
+     TIPOGRAFIA COLOSSAL (referência Degenerate Ape)
+  ═══════════════════════════════════════════════ */
+  .display-xl {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(5rem, 10vw, 10rem);
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+    color: var(--sober-text);
+  }
+  .display-lg {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--sober-text);
+  }
+  .display-md {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: var(--sober-text);
+  }
+  .display-sm {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--sober-text);
+  }
+  .display-faded { color: var(--sober-text-dim); }
+
+  /* ═══════════════════════════════════════════════
+     BUTTON: btn-wrapper (corner accents on hover)
+  ═══════════════════════════════════════════════ */
+  .btn-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 13px;
+    cursor: pointer;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: border-color 0.3s;
+    background: transparent;
+  }
+  .btn-wrapper:hover { border-color: var(--sober-accent); }
+  .btn-wrapper .dot-bg {
+    position: absolute; inset: 0; opacity: 0;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjI2LDc1LDc0LDAuMikiLz48L3N2Zz4=');
+    transition: opacity 0.3s; pointer-events: none;
+  }
+  .btn-wrapper:hover .dot-bg { opacity: 1; }
+  .btn-wrapper .ca-tl, .btn-wrapper .ca-br {
+    position: absolute; width: 8px; height: 8px; opacity: 0;
+    transition: all 0.3s; pointer-events: none;
+  }
+  .btn-wrapper .ca-tl {
+    top: 0; left: 0;
+    border-top: 1px solid var(--sober-accent);
+    border-left: 1px solid var(--sober-accent);
+    transform: translate(-4px,-4px);
+  }
+  .btn-wrapper .ca-br {
+    bottom: 0; right: 0;
+    border-bottom: 1px solid var(--sober-accent);
+    border-right: 1px solid var(--sober-accent);
+    transform: translate(4px,4px);
+  }
+  .btn-wrapper:hover .ca-tl,
+  .btn-wrapper:hover .ca-br { opacity: 1; transform: translate(0,0); }
+
+  /* ═══════════════════════════════════════════════
+     NAV LINKS
+  ═══════════════════════════════════════════════ */
+  .nav-link {
+    color: var(--sober-text-muted);
+    text-decoration: none;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-link:hover { color: #fff; background: rgba(255,255,255,0.08); }
+
+  /* ═══════════════════════════════════════════════
+     SWATCH
+  ═══════════════════════════════════════════════ */
+  .swatch {
+    background: var(--sober-surface);
+    border: 1px solid var(--sober-border);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .swatch:hover { transform: translateY(-2px); border-color: var(--sober-text-muted); }
+
+  /* ═══════════════════════════════════════════════
+     INPUTS
+  ═══════════════════════════════════════════════ */
+  .sober-input {
+    width: 100%;
+    background: var(--sober-surface);
+    border: 1px solid var(--sober-border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #fff;
+    font-family: var(--sans);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .sober-input::placeholder { color: var(--sober-text-dim); }
+  .sober-input:focus       { border-color: var(--sober-accent); }
+  .sober-input.error       { border-color: var(--sober-accent); background: rgba(226,75,74,0.05); }
+  .sober-input.success     { border-color: var(--sober-success); background: rgba(93,202,93,0.05); }
+
+  /* ═══════════════════════════════════════════════
+     PROGRESS
+  ═══════════════════════════════════════════════ */
+  .progress-track { height: 4px; background: var(--sober-surface-raised); border-radius: 2px; overflow: hidden; }
+  .progress-fill  { height: 100%; border-radius: 2px; animation: progressFill 1s var(--ease-out-quint) 0.3s both; }
+
+  /* ═══════════════════════════════════════════════
+     TOOLTIP
+  ═══════════════════════════════════════════════ */
+  .has-tooltip { position: relative; }
+  .tooltip-box {
+    position: absolute; bottom: calc(100% + 8px); left: 50%;
+    transform: translateX(-50%);
+    background: var(--sober-bg-deep); border: 1px solid var(--sober-border); border-radius: 6px;
+    padding: 6px 12px; font-size: 12px; color: var(--sober-text-secondary); white-space: nowrap;
+    opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 100;
+  }
+  .has-tooltip:hover .tooltip-box { opacity: 1; }
+
+  /* ═══════════════════════════════════════════════
+     RANK CARD
+  ═══════════════════════════════════════════════ */
+  .rank-card {
+    background: var(--sober-surface);
+    border: 1px solid var(--sober-border);
+    border-radius: 12px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s var(--ease-out-quint), border-color 0.3s;
+  }
+  .rank-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--rank-color);
+  }
+  .rank-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--rank-color);
+  }
+
+  /* ═══════════════════════════════════════════════
+     ICON CELL
+  ═══════════════════════════════════════════════ */
+  .icon-cell {
+    background: var(--sober-bg-deep);
+    border: 1px solid var(--sober-border-soft);
+    border-radius: 8px; padding: 16px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.7);
+    transition: color 0.2s, border-color 0.2s;
+    cursor: default;
+  }
+  .icon-cell:hover {
+    color: var(--sober-accent);
+    border-color: var(--sober-accent);
+  }
+
+  /* ═══════════════════════════════════════════════
+     SECTION CARD WRAPPER
+  ═══════════════════════════════════════════════ */
+  .sec-card {
+    background: var(--sober-bg-deep);
+    border: 1px solid var(--sober-border-soft);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  .sec-card-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--sober-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+
+  /* ═══════════════════════════════════════════════
+     FEATURE CARD (SEÇÃO 04 — features do app)
+  ═══════════════════════════════════════════════ */
+  .feature-card {
+    background: var(--sober-surface);
+    border: 1px solid var(--sober-border);
+    border-radius: 16px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-out-quint), border-color 0.3s;
+  }
+  .feature-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(226,75,74,0.4);
+  }
+  .feature-card::after {
+    content: ''; position: absolute;
+    top: 0; right: 0; width: 80px; height: 80px;
+    background: radial-gradient(circle at top right, var(--feature-glow, rgba(226,75,74,0.15)), transparent 70%);
+    pointer-events: none;
+    opacity: 0.6;
+  }
+  .feature-card .icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 18px;
+    background: var(--feature-icon-bg, rgba(226,75,74,0.12));
+    border: 1px solid var(--feature-icon-border, rgba(226,75,74,0.3));
+  }
+  .feature-card .feat-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--sober-text-muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .feature-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 10px;
+    color: var(--sober-text);
+  }
+  .feature-card p {
+    font-size: 14px;
+    color: var(--sober-text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ═══════════════════════════════════════════════
+     PHONE FRAME (mockups de tela do app)
+  ═══════════════════════════════════════════════ */
+  .phone-frame {
+    width: 248px;
+    background: var(--sober-bg-deep);
+    border-radius: 38px;
+    border: 3px solid var(--sober-border);
+    padding: 11px 8px 8px;
+    position: relative;
+    font-family: var(--sans);
+    flex-shrink: 0;
+  }
+  .phone-frame::before {
+    content: '';
+    width: 58px; height: 18px;
+    background: #000;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
+  .phone-screen {
+    background: #111;
+    border-radius: 28px;
+    overflow: hidden;
+    padding: 30px 11px 9px;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ═══════════════════════════════════════════════
+     PRICING CARD (monetização modelo E)
+  ═══════════════════════════════════════════════ */
+  .pricing-card {
+    background: var(--sober-surface);
+    border: 1px solid var(--sober-border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s var(--ease-out-quint);
+  }
+  .pricing-card.featured {
+    border-color: var(--sober-accent);
+    background: linear-gradient(180deg, rgba(226,75,74,0.05), var(--sober-surface) 30%);
+  }
+  .pricing-card:hover { transform: translateY(-4px); }
+
+  /* ═══════════════════════════════════════════════
+     CODE BLOCK
+  ═══════════════════════════════════════════════ */
+  pre {
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.8;
+    overflow-x: auto;
+    color: var(--sober-text-secondary);
+  }
+
+  .replay-btn {
+    font-family: var(--mono); font-size: 10px; color: var(--sober-text-muted);
+    background: transparent; border: 1px solid var(--sober-border); border-radius: 4px;
+    padding: 4px 8px; cursor: pointer; transition: color 0.2s, border-color 0.2s;
+  }
+  .replay-btn:hover { color: var(--sober-accent); border-color: var(--sober-accent); }
+
+  /* ═══════════════════════════════════════════════
+     RESPONSIVE
+  ═══════════════════════════════════════════════ */
+  @media (max-width: 768px) {
+    .hide-mobile { display: none !important; }
+    .ops-bar { font-size: 9px; gap: 8px; }
+    .display-xl { font-size: clamp(3.5rem, 15vw, 5.5rem); }
+  }
+</style>
+
+<script>
+(function() {
+  window.__inViewIO = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('animate');
+        window.__inViewIO.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+  window.initInViewAnimations = (sel = '.animate-on-scroll') =>
+    document.querySelectorAll(sel).forEach(el => window.__inViewIO.observe(el));
+  document.addEventListener('DOMContentLoaded', () => initInViewAnimations());
+})();
+</script>
 </head>
+
 <body>
-  <div class="container">
-    <header>
-      <h1>Sober</h1>
-      <p>Seu companheiro na jornada de sobriedade</p>
-    </header>
 
-    <nav>
-      <a href="#privacidade">Privacidade</a>
-      <a href="#termos">Termos de Uso</a>
-    </nav>
-
-    <!-- ════════════════════════════════════════════════════════════════════════ -->
-    <!-- POLÍTICA DE PRIVACIDADE                                                 -->
-    <!-- ════════════════════════════════════════════════════════════════════════ -->
-    <section id="privacidade">
-      <h2>Política de Privacidade</h2>
-      <p class="date">Última atualização: 7 de abril de 2026</p>
-
-      <p>O <strong>Sober</strong> respeita sua privacidade. Esta política explica quais dados coletamos, como os usamos e quais são seus direitos.</p>
-
-      <h3>1. Dados que coletamos</h3>
-      <ul>
-        <li><strong>Conta:</strong> e-mail e senha (armazenada como hash bcrypt — nunca em texto puro).</li>
-        <li><strong>Sobriedade:</strong> tipo de vício, data de início, dias consecutivos, total de dias limpos e gasto mensal declarado.</li>
-        <li><strong>Metas financeiras:</strong> nome da meta e valor total.</li>
-      </ul>
-      <p>Não coletamos localização, contatos, fotos ou qualquer dado do dispositivo além do necessário para o funcionamento do app.</p>
-
-      <h3>2. Nome fictício</h3>
-      <p>Ao criar sua conta, o Sober gera automaticamente um <strong>nome fictício aleatório</strong> (ex.: "Lobo Claro") para proteger sua identidade. Seu nome real nunca é solicitado.</p>
-
-      <h3>3. Como usamos seus dados</h3>
-      <ul>
-        <li>Manter seu progresso de sobriedade sincronizado entre dispositivos.</li>
-        <li>Calcular economias estimadas com base no gasto mensal declarado.</li>
-        <li>Nenhum dado é vendido, compartilhado com terceiros ou usado para publicidade.</li>
-      </ul>
-
-      <h3>4. Armazenamento e segurança</h3>
-      <ul>
-        <li>Dados armazenados em banco PostgreSQL com conexão SSL.</li>
-        <li>Senhas protegidas com bcrypt (custo 12).</li>
-        <li>Autenticação via tokens JWT.</li>
-        <li>Comunicação exclusivamente via HTTPS.</li>
-        <li>Rate limiting para proteção contra ataques de força bruta.</li>
-      </ul>
-
-      <h3>5. Seus direitos (LGPD)</h3>
-      <ul>
-        <li><strong>Acesso:</strong> você pode visualizar todos os seus dados a qualquer momento dentro do app.</li>
-        <li><strong>Exclusão:</strong> você pode excluir sua conta e todos os dados associados diretamente pelo app. A exclusão é imediata e irreversível.</li>
-        <li><strong>Portabilidade:</strong> entre em contato para solicitar exportação dos seus dados.</li>
-      </ul>
-
-      <h3>6. Contato</h3>
-      <p>Para dúvidas sobre privacidade: <a href="mailto:contato@soberapp.com.br">contato@soberapp.com.br</a></p>
-    </section>
-
-    <!-- ════════════════════════════════════════════════════════════════════════ -->
-    <!-- TERMOS DE USO                                                           -->
-    <!-- ════════════════════════════════════════════════════════════════════════ -->
-    <section id="termos">
-      <h2>Termos de Uso</h2>
-      <p class="date">Última atualização: 7 de abril de 2026</p>
-
-      <p>Ao usar o <strong>Sober</strong>, você concorda com os termos abaixo.</p>
-
-      <h3>1. O que o Sober faz</h3>
-      <p>O Sober é um aplicativo de acompanhamento pessoal de sobriedade. Ele ajuda você a registrar e visualizar seu progresso, calcular economias estimadas e definir metas financeiras.</p>
-
-      <h3>2. O que o Sober não faz</h3>
-      <ul>
-        <li>O Sober <strong>não é</strong> um serviço médico, terapêutico ou de aconselhamento.</li>
-        <li>O app não substitui acompanhamento profissional de saúde.</li>
-        <li>Nenhuma informação no app deve ser interpretada como orientação médica.</li>
-      </ul>
-
-      <h3>3. Sua conta</h3>
-      <ul>
-        <li>Você é responsável por manter suas credenciais seguras.</li>
-        <li>Cada pessoa deve ter sua própria conta.</li>
-        <li>Você pode excluir sua conta a qualquer momento — a exclusão é permanente.</li>
-      </ul>
-
-      <h3>4. Uso aceitável</h3>
-      <p>Você concorda em não:</p>
-      <ul>
-        <li>Tentar acessar contas de outros usuários.</li>
-        <li>Sobrecarregar o serviço com requisições automatizadas.</li>
-        <li>Usar o app para qualquer finalidade ilegal.</li>
-      </ul>
-
-      <h3>5. Disponibilidade</h3>
-      <p>O Sober é fornecido "como está". Faremos nosso melhor para manter o serviço disponível, mas não garantimos disponibilidade ininterrupta. Podemos descontinuar o serviço com aviso prévio de 30 dias.</p>
-
-      <h3>6. Propriedade intelectual</h3>
-      <p>O código, design e marca do Sober são de propriedade de seus criadores. Seus dados pessoais pertencem a você.</p>
-
-      <h3>7. Alterações</h3>
-      <p>Podemos atualizar estes termos. Alterações significativas serão comunicadas pelo app. O uso continuado após a notificação constitui aceitação.</p>
-
-      <h3>8. Contato</h3>
-      <p>Para dúvidas: <a href="mailto:contato@soberapp.com.br">contato@soberapp.com.br</a></p>
-    </section>
-
-    <footer>
-      <p>&copy; 2026 Sober. Todos os direitos reservados.</p>
-    </footer>
+<!-- ═══════════════════════════════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════════════════════════════ -->
+<nav style="position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(10,10,10,0.7);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:12px 32px;display:flex;justify-content:space-between;align-items:center;">
+  <!-- Logo -->
+  <a href="#hero" style="font-family:var(--pixel);font-size:12px;letter-spacing:0.15em;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px;">
+    <span style="width:8px;height:8px;background:var(--sober-accent);border-radius:50%;display:inline-block;flex-shrink:0;"></span>
+    SOBER
+  </a>
+  <!-- Nav pill container (estilo Pixel Rise) -->
+  <div class="hide-mobile" style="display:flex;gap:4px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-radius:40px;padding:4px 6px;font-family:var(--sans);font-size:13px;font-weight:500;">
+    <a href="#features"   class="nav-link" style="padding:6px 14px;border-radius:32px;transition:background 0.2s;">features</a>
+    <a href="#screens"    class="nav-link" style="padding:6px 14px;border-radius:32px;transition:background 0.2s;">screens</a>
+    <a href="#pricing"    class="nav-link" style="padding:6px 14px;border-radius:32px;transition:background 0.2s;">pricing</a>
+    <a href="#colors"     class="nav-link" style="padding:6px 14px;border-radius:32px;transition:background 0.2s;">cores</a>
+    <a href="#components" class="nav-link" style="padding:6px 14px;border-radius:32px;transition:background 0.2s;">componentes</a>
   </div>
+  <!-- CTA button -->
+  <a href="#pricing" style="font-family:var(--sans);font-size:13px;font-weight:600;color:#fff;text-decoration:none;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:32px;padding:8px 20px;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.14)';this.style.borderColor='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.08)';this.style.borderColor='rgba(255,255,255,0.12)'">baixar app</a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SEÇÃO 00 — HERO (celular + Nanos flutuando + HUD ops manual)
+═══════════════════════════════════════════════════════════════════ -->
+<section id="hero" class="pro-bg" style="min-height:100vh;padding-top:72px;border-top:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;">
+
+  <!-- Background layers -->
+  <div class="pro-bg-dots"></div>
+
+  <!-- HUD: brackets nos 4 cantos -->
+  <div class="hud-bracket tl"></div>
+  <div class="hud-bracket tr"></div>
+  <div class="hud-bracket bl"></div>
+  <div class="hud-bracket br"></div>
+
+  <!-- HUD: labels verticais nas laterais (estilo Degenerate Ape "AA: 632 36T6 2123") -->
+  <div class="hud-vertical left  hide-mobile">br :: sober :: v3.0 :: brasília</div>
+  <div class="hud-vertical right hide-mobile">em desenvolvimento ativo</div>
+
+  <!-- Top status bar (estilo "STATUS: IN PROGRESS / PROCESSES: 108 / RUNNING: 8") -->
+  <div style="max-width:1280px;margin:0 auto;padding:32px 64px 0;position:relative;z-index:2;">
+    <div class="animate-on-scroll" style="animation:fadeIn 0.8s ease-out 0.1s both;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;">
+      <div style="display:flex;gap:24px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.18em;color:var(--sober-text-muted);text-transform:uppercase;">
+        <span>status: <span style="color:var(--sober-success);">beta · ativo</span></span>
+      </div>
+      <div class="hud-path">
+        <span style="color:var(--sober-accent);">c:/</span>
+        <span class="arrow">›</span>
+        <span>sober</span>
+        <span class="arrow">›</span>
+        <span>design system</span>
+        <span class="arrow">›</span>
+        <span style="color:var(--sober-text);">overview</span>
+      </div>
+    </div>
+
+    <!-- Hash divider -->
+    <div class="hud-hash animate-on-scroll" style="animation:fadeIn 1s ease-out 0.3s both;margin:24px 0 0;"></div>
+  </div>
+
+  <!-- Hero content grid: type esquerda + phone+nanos direita -->
+  <div style="max-width:1280px;margin:0 auto;padding:48px 64px 100px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;position:relative;z-index:2;min-height:calc(100vh - 200px);" id="hero-grid">
+
+    <!-- LEFT: typography + CTAs + stats -->
+    <div style="display:flex;flex-direction:column;gap:28px;">
+
+      <div class="section-index animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.2s both;">
+        [00 / 10] · sober · ops manual
+      </div>
+
+      <h1 class="display-xl animate-on-scroll" style="animation:fadeSlideIn 1s var(--ease-out-quint) 0.4s both;font-size:clamp(4rem,10vw,9.5rem);">
+        a decisão<br>
+        <span class="display-faded">já foi tomada.</span>
+      </h1>
+
+      <!-- Pixel-font subtitle (referência Pixel Rise · usado com moderação) -->
+      <p class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.6s both;font-family:var(--pixel);font-size:11px;letter-spacing:0.1em;color:var(--sober-accent);">
+        &gt; agora a gente constrói junto.
+      </p>
+
+      <p class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.7s both;font-size:19px;color:var(--sober-text-secondary);line-height:1.6;max-width:480px;">
+        ferramentas para os momentos em que a vontade bate. construído por quem tá na jornada, para quem tá na jornada.
+      </p>
+
+      <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.9s both;display:flex;align-items:center;gap:20px;flex-wrap:wrap;">
+        <a href="#features" class="btn-wrapper">
+          <span class="dot-bg"></span><span class="ca-tl"></span><span class="ca-br"></span>
+          <span style="position:relative;z-index:1;">explorar features</span>
+        </a>
+        <a href="#screens" class="nav-link" style="font-size:14px;color:var(--sober-text-muted);">ver screens →</a>
+      </div>
+
+      <!-- Stat row compacto -->
+      <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 1.1s both;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--sober-border);border:1px solid var(--sober-border);border-radius:10px;overflow:hidden;margin-top:8px;">
+        <div style="background:rgba(20,20,24,0.6);backdrop-filter:blur(8px);padding:18px;">
+          <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--sober-text-muted);text-transform:uppercase;margin-bottom:6px;">economia</p>
+          <p style="font-size:22px;font-weight:700;color:var(--rank-ferro);letter-spacing:-0.02em;line-height:1;">R$ 2.220</p>
+          <p style="font-size:10px;color:var(--sober-text-muted);margin-top:4px;">média · 148 dias</p>
+        </div>
+        <div style="background:rgba(20,20,24,0.6);backdrop-filter:blur(8px);padding:18px;">
+          <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--sober-text-muted);text-transform:uppercase;margin-bottom:6px;">ranks</p>
+          <p style="font-size:22px;font-weight:700;color:var(--rank-rubi);letter-spacing:-0.02em;line-height:1;">8 · 730d</p>
+          <p style="font-size:10px;color:var(--sober-text-muted);margin-top:4px;">ferro → lendário</p>
+        </div>
+        <div style="background:rgba(20,20,24,0.6);backdrop-filter:blur(8px);padding:18px;">
+          <p style="font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--sober-text-muted);text-transform:uppercase;margin-bottom:6px;">launch</p>
+          <p style="font-size:22px;font-weight:700;color:var(--sober-text);letter-spacing:-0.02em;line-height:1;">nov · 26</p>
+          <p style="font-size:10px;color:var(--sober-text-muted);margin-top:4px;">ios + android br</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: dual phones Opal style + floating Nanos around -->
+    <div style="position:relative;display:flex;align-items:center;justify-content:center;height:640px;">
+
+      <!-- Corner glows (replace beam borders) -->
+      <div class="corner-glow tl"></div>
+      <div class="corner-glow tr"></div>
+      <div class="corner-glow bl"></div>
+      <div class="corner-glow br"></div>
+
+      <!-- Sutil radial spotlight atrás dos celulares -->
+      <div style="position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.03),rgba(255,255,255,0.01) 40%,transparent 70%);filter:blur(50px);pointer-events:none;"></div>
+
+      <!-- Floating Nano · Ferro (azul · top-left) — SVG real de assets/nanos/ferro.svg -->
+      <div class="nano-floater animate-on-scroll" style="top:8%;left:5%;width:64px;animation:float-1 4s ease-in-out infinite, fadeIn 1s ease-out 0.5s both;">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="64" height="64" style="image-rendering:pixelated;"><g transform="translate(-2,-2) scale(0.923)"><rect x="22" y="2" width="8" height="4" fill="#85B7EB"/><rect x="24" y="6" width="4" height="6" fill="#2A6AA4"/><rect x="14" y="12" width="24" height="4" fill="#85B7EB"/><rect x="12" y="16" width="28" height="4" fill="#378ADD"/><rect x="12" y="20" width="28" height="4" fill="#042C53"/><rect x="16" y="20" width="4" height="4" fill="#4A8CC4"/><rect x="32" y="20" width="4" height="4" fill="#4A8CC4"/><rect x="14" y="24" width="24" height="4" fill="#378ADD"/><rect x="14" y="28" width="24" height="4" fill="#2A6AA4"/><rect x="16" y="32" width="20" height="4" fill="#185FA5"/><rect x="22" y="28" width="8" height="4" fill="#042C53"/><rect x="8" y="24" width="4" height="8" fill="#2A6AA4"/><rect x="40" y="24" width="4" height="8" fill="#2A6AA4"/><rect x="16" y="36" width="8" height="4" fill="#042C53"/><rect x="28" y="36" width="8" height="4" fill="#042C53"/></g></svg>
+        <p style="font-family:var(--mono);font-size:8px;letter-spacing:0.15em;color:var(--rank-ferro);text-transform:uppercase;text-align:center;margin-top:6px;">ferro</p>
+      </div>
+
+      <!-- Floating Nano · Cobre (laranja · top-right) — SVG real de assets/nanos/cobre.svg -->
+      <div class="nano-floater animate-on-scroll" style="top:14%;right:6%;width:60px;animation:float-2 5s ease-in-out infinite, fadeIn 1s ease-out 0.7s both;">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="60" height="60" style="image-rendering:pixelated;"><g transform="translate(-2,-2) scale(0.923)"><rect x="20" y="4" width="12" height="4" fill="#FAEEDA"/><rect x="16" y="8" width="4" height="4" fill="#FAC775"/><rect x="20" y="8" width="12" height="4" fill="#E8693A"/><rect x="36" y="8" width="4" height="4" fill="#FAC775"/><rect x="12" y="12" width="4" height="4" fill="#412402"/><rect x="16" y="12" width="20" height="4" fill="#C05528"/><rect x="36" y="12" width="4" height="4" fill="#412402"/><rect x="8" y="16" width="4" height="4" fill="#FAC775"/><rect x="12" y="16" width="4" height="4" fill="#412402"/><rect x="16" y="16" width="4" height="4" fill="#FAEEDA"/><rect x="20" y="16" width="12" height="4" fill="#E8693A"/><rect x="32" y="16" width="4" height="4" fill="#FAEEDA"/><rect x="36" y="16" width="4" height="4" fill="#412402"/><rect x="40" y="16" width="4" height="4" fill="#FAC775"/><rect x="8" y="20" width="36" height="4" fill="#E8693A"/><rect x="8" y="24" width="4" height="4" fill="#412402"/><rect x="12" y="24" width="4" height="4" fill="#FAC775"/><rect x="16" y="24" width="20" height="4" fill="#1A1A1A"/><rect x="36" y="24" width="4" height="4" fill="#FAC775"/><rect x="40" y="24" width="4" height="4" fill="#412402"/><rect x="8" y="28" width="36" height="4" fill="#C05528"/><rect x="12" y="32" width="4" height="4" fill="#FAC775"/><rect x="16" y="32" width="20" height="4" fill="#E8693A"/><rect x="36" y="32" width="4" height="4" fill="#FAC775"/><rect x="16" y="36" width="8" height="4" fill="#412402"/><rect x="28" y="36" width="8" height="4" fill="#412402"/><rect x="16" y="40" width="4" height="4" fill="#FAC775"/><rect x="32" y="40" width="4" height="4" fill="#FAC775"/><rect x="20" y="40" width="12" height="4" fill="#E8693A"/></g></svg>
+        <p style="font-family:var(--mono);font-size:8px;letter-spacing:0.15em;color:var(--rank-cobre);text-transform:uppercase;text-align:center;margin-top:6px;">cobre</p>
+      </div>
+
+      <!-- Floating Nano · Rubi (vermelho · bottom-left) — SVG real de assets/nanos/rubi.svg -->
+      <div class="nano-floater animate-on-scroll" style="bottom:14%;left:2%;width:58px;animation:float-3 4.5s ease-in-out infinite, fadeIn 1s ease-out 0.9s both;">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="58" height="58" style="image-rendering:pixelated;"><g transform="translate(-2,-4) scale(0.923)"><rect x="16" y="8" width="20" height="4" fill="#E24B4A"/><rect x="12" y="12" width="28" height="4" fill="#A32D2D"/><rect x="8" y="16" width="4" height="4" fill="#F09595"/><rect x="12" y="16" width="4" height="4" fill="#FCEBEB"/><rect x="16" y="16" width="20" height="4" fill="#A32D2D"/><rect x="36" y="16" width="4" height="4" fill="#FCEBEB"/><rect x="40" y="16" width="4" height="4" fill="#F09595"/><rect x="8" y="20" width="36" height="4" fill="#A32D2D"/><rect x="4" y="24" width="4" height="4" fill="#F09595"/><rect x="8" y="24" width="36" height="4" fill="#E24B4A"/><rect x="44" y="24" width="4" height="4" fill="#F09595"/><rect x="10" y="20" width="8" height="4" fill="#F09595"/><rect x="12" y="20" width="4" height="4" fill="#1A1A1A"/><rect x="34" y="20" width="4" height="4" fill="#1A1A1A"/><rect x="32" y="20" width="8" height="4" fill="#F09595"/><rect x="20" y="20" width="12" height="4" fill="#791F1F"/><rect x="12" y="28" width="28" height="4" fill="#A32D2D"/><rect x="10" y="32" width="32" height="4" fill="#E24B4A"/><rect x="14" y="36" width="24" height="4" fill="#A32D2D"/><rect x="18" y="40" width="16" height="4" fill="#791F1F"/><rect x="22" y="44" width="8" height="4" fill="#E24B4A"/><rect x="24" y="48" width="4" height="4" fill="#791F1F"/></g></svg>
+        <p style="font-family:var(--mono);font-size:8px;letter-spacing:0.15em;color:var(--rank-rubi);text-transform:uppercase;text-align:center;margin-top:6px;">rubi</p>
+      </div>
+
+      <!-- Floating Nano · Mestre (vermelho escuro · bottom-right) — SVG de assets/nanos/mestre.svg -->
+      <div class="nano-floater animate-on-scroll" style="bottom:8%;right:4%;width:62px;animation:float-4 5.5s ease-in-out infinite, fadeIn 1s ease-out 1.1s both;">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="62" height="62" style="image-rendering:pixelated;"><g transform="translate(-2,-2) scale(0.923)"><rect x="20" y="4" width="12" height="4" fill="#6B1A1A"/><rect x="16" y="8" width="20" height="4" fill="#8B2A2A"/><rect x="12" y="12" width="28" height="4" fill="#6B1A1A"/><rect x="10" y="16" width="32" height="4" fill="#4A0E0E"/><rect x="12" y="20" width="28" height="4" fill="#0A0A0A"/><rect x="16" y="20" width="20" height="2" fill="#FAC775"/><rect x="16" y="24" width="20" height="4" fill="#1A1A1A"/><rect x="12" y="28" width="28" height="4" fill="#8B2A2A"/><rect x="12" y="32" width="28" height="4" fill="#6B1A1A"/><rect x="10" y="36" width="32" height="4" fill="#4A0E0E"/><rect x="6" y="28" width="4" height="8" fill="#4A0E0E"/><rect x="42" y="28" width="4" height="8" fill="#4A0E0E"/><rect x="24" y="28" width="4" height="12" fill="#A33030"/><rect x="14" y="40" width="24" height="4" fill="#2A0808"/></g></svg>
+        <p style="font-family:var(--mono);font-size:8px;letter-spacing:0.15em;color:var(--rank-mestre);text-transform:uppercase;text-align:center;margin-top:6px;">mestre</p>
+      </div>
+
+      <!-- Floating Nano · Ouro (amarelo · middle-left, smaller) — SVG original de assets/nanos/ouro.svg -->
+      <div class="nano-floater animate-on-scroll hide-mobile" style="top:48%;left:-4%;width:46px;animation:float-5 6s ease-in-out infinite, fadeIn 1s ease-out 1.3s both;opacity:0.7;">
+        <svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" width="46" height="46" style="image-rendering:pixelated;"><g transform="translate(-4,-1) scale(0.857)"><rect x="20" y="2" width="16" height="4" fill="#FAC775"/><rect x="16" y="6" width="24" height="4" fill="#FAC775"/><rect x="14" y="10" width="28" height="4" fill="#EF9F27"/><rect x="12" y="14" width="32" height="4" fill="#BA7517"/><rect x="10" y="18" width="36" height="4" fill="#EF9F27"/><rect x="10" y="22" width="14" height="12" fill="#4A4A47"/><rect x="32" y="22" width="14" height="12" fill="#4A4A47"/><rect x="11" y="23" width="12" height="10" fill="#FAC775"/><rect x="33" y="23" width="12" height="10" fill="#FAC775"/><rect x="13" y="25" width="8" height="6" fill="#854F0B"/><rect x="35" y="25" width="8" height="6" fill="#854F0B"/><rect x="13" y="25" width="3" height="3" fill="#1A1A1A"/><rect x="35" y="25" width="3" height="3" fill="#1A1A1A"/><rect x="10" y="34" width="36" height="4" fill="#BA7517"/><rect x="24" y="32" width="8" height="4" fill="#854F0B"/><rect x="10" y="38" width="36" height="4" fill="#2C2C2A"/><rect x="14" y="38" width="4" height="4" fill="#FAC775"/><rect x="22" y="38" width="12" height="4" fill="#FAC775"/><rect x="38" y="38" width="4" height="4" fill="#FAC775"/><rect x="12" y="42" width="32" height="4" fill="#BA7517"/><rect x="16" y="46" width="24" height="4" fill="#EF9F27"/><rect x="20" y="50" width="16" height="4" fill="#854F0B"/><rect x="18" y="54" width="20" height="4" fill="#2C2C2A"/><rect x="8" y="22" width="4" height="8" fill="#BA7517"/><rect x="44" y="22" width="4" height="8" fill="#BA7517"/><rect x="6" y="26" width="4" height="4" fill="#854F0B"/><rect x="46" y="26" width="4" height="4" fill="#854F0B"/></g></svg>
+      </div>
+
+      <!-- Dual phones Opal layout -->
+      <div class="phone-duo animate-on-scroll" style="animation:fadeSlideIn 1.2s var(--ease-out-quint) 0.4s both;">
+
+        <!-- Back phone (jornada) -->
+        <div class="phone-back">
+          <div class="phone-frame" style="width:240px;border:2px solid rgba(255,255,255,0.08);box-shadow:0 30px 60px -15px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.03);">
+            <div style="background:#000;border-radius:24px;overflow:hidden;position:relative;">
+              <img src="assets/screens/jornada.png" alt="Sober · Jornada · heatmap 40d" style="display:block;width:100%;height:auto;border-radius:24px;">
+            </div>
+          </div>
+        </div>
+
+        <!-- Front phone (home) -->
+        <div class="phone-front">
+          <div class="phone-frame" style="width:268px;border:3px solid var(--sober-border);box-shadow:0 40px 80px -20px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);">
+            <div style="background:#000;border-radius:28px;overflow:hidden;position:relative;">
+              <img src="assets/screens/home.png" alt="Sober · Home · rank Cobre · dia 11" style="display:block;width:100%;height:auto;border-radius:28px;">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Phone caption mono -->
+      <p style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:9px;letter-spacing:0.25em;color:var(--sober-text-muted);text-transform:uppercase;text-align:center;white-space:nowrap;z-index:5;">[home + jornada] · ios + android</p>
+
+    </div>
+
+  </div>
+
+  <!-- Bottom hash + sub-status -->
+  <div style="max-width:1280px;margin:0 auto;padding:0 64px 24px;position:relative;z-index:2;">
+    <div class="hud-hash" style="margin-bottom:16px;"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:9px;letter-spacing:0.2em;color:var(--sober-text-dim);text-transform:uppercase;flex-wrap:wrap;gap:12px;">
+      <span>scroll · explore</span>
+      <span class="hide-mobile">10 sections · ds v3.0</span>
+      <span>brasília · 2026</span>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- Hero responsive override -->
+<style>
+  @media (max-width: 980px) {
+    #hero-grid { grid-template-columns: 1fr !important; gap: 32px !important; padding: 32px 24px 80px !important; }
+    .hud-vertical, .hud-bracket { display: none !important; }
+  }
+</style>
+
+
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SEÇÃO 03 — FEATURES DO APP (NOVO · o que tu pediu)
+═══════════════════════════════════════════════════════════════════ -->
+<section id="features" style="background:var(--sober-bg-deep);padding:96px 32px;border-top:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden;">
+
+  <div class="ghost-type hide-mobile" style="top:5%;right:-5%;font-size:clamp(6rem,16vw,16rem);opacity:0.6;">f e a t u r e s</div>
+
+  <div style="max-width:1280px;margin:0 auto;position:relative;z-index:1;">
+
+    <div style="margin-bottom:64px;">
+      <p class="section-index">[03 / 10] · features</p>
+      <h2 class="display-md" style="margin-bottom:12px;">o que o app faz</h2>
+      <p style="font-size:19px;color:var(--sober-text-secondary);max-width:640px;line-height:1.6;">3 dimensões de interatividade pra maio–julho · monetização modelo E · ai chat arquivado até Q2/2027.</p>
+    </div>
+
+    <!-- Features grid -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+
+      <!-- Rituais -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.1s both;--feature-glow:rgba(55,138,221,0.15);--feature-icon-bg:rgba(55,138,221,0.12);--feature-icon-border:rgba(55,138,221,0.3);">
+        <div class="icon-wrap"><i data-lucide="sunrise" style="width:22px;height:22px;color:var(--rank-ferro);"></i></div>
+        <p class="feat-tag">[01] · diária</p>
+        <h3>rituais manhã & noite</h3>
+        <p>check-ins guiados pra ancorar o dia. 3 minutos de manhã pra alinhar intenção. 3 minutos à noite pra fechar o ciclo.</p>
+      </div>
+
+      <!-- SOS -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.15s both;--feature-glow:rgba(212,168,67,0.15);--feature-icon-bg:rgba(212,168,67,0.12);--feature-icon-border:rgba(212,168,67,0.3);">
+        <div class="icon-wrap"><i data-lucide="shield-alert" style="width:22px;height:22px;color:var(--sober-warning);"></i></div>
+        <p class="feat-tag">[02] · safety plan</p>
+        <h3>botão SOS</h3>
+        <p>quando a vontade bate forte: respiração guiada, contatos de confiança, e um caminho pra atravessar os primeiros 15 minutos sem ceder.</p>
+      </div>
+
+      <!-- Biblioteca -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.2s both;--feature-glow:rgba(127,119,221,0.15);--feature-icon-bg:rgba(127,119,221,0.12);--feature-icon-border:rgba(127,119,221,0.3);">
+        <div class="icon-wrap"><i data-lucide="library" style="width:22px;height:22px;color:var(--rank-onix);"></i></div>
+        <p class="feat-tag">[03] · 20+ técnicas</p>
+        <h3>biblioteca de craving</h3>
+        <p>técnicas testadas para urge surfing, defusão cognitiva, grounding 5-4-3-2-1, e mais. acesso offline. organizado por tempo disponível.</p>
+      </div>
+
+      <!-- Conquistas -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.25s both;--feature-glow:rgba(239,159,39,0.15);--feature-icon-bg:rgba(239,159,39,0.12);--feature-icon-border:rgba(239,159,39,0.3);">
+        <div class="icon-wrap"><i data-lucide="award" style="width:22px;height:22px;color:var(--rank-ouro);"></i></div>
+        <p class="feat-tag">[04] · gamificação</p>
+        <h3>conquistas comportamentais</h3>
+        <p>badges baseadas em comportamento real, não em dias passivos. ex: "3 SOS atravessados", "primeira semana com sono regular".</p>
+      </div>
+
+      <!-- Comunidade -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.3s both;--feature-glow:rgba(93,202,93,0.15);--feature-icon-bg:rgba(93,202,93,0.12);--feature-icon-border:rgba(93,202,93,0.3);">
+        <div class="icon-wrap"><i data-lucide="users" style="width:22px;height:22px;color:var(--sober-success);"></i></div>
+        <p class="feat-tag">[05] · time do bem</p>
+        <h3>comunidade fechada</h3>
+        <p>grupos de 4–6 pessoas com código de entrada. calendário mensal compartilhado. fotos do dia. accountability sem tóxico.</p>
+      </div>
+
+      <!-- Descobrir -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.35s both;--feature-glow:rgba(232,105,58,0.15);--feature-icon-bg:rgba(232,105,58,0.12);--feature-icon-border:rgba(232,105,58,0.3);">
+        <div class="icon-wrap"><i data-lucide="compass" style="width:22px;height:22px;color:var(--rank-cobre);"></i></div>
+        <p class="feat-tag">[06] · curado · gabriel</p>
+        <h3>aba descobrir</h3>
+        <p>5 seções com conteúdo curado · grupos de corrida e esporte em brasília via geolocalização · áudios de especialistas · histórias reais.</p>
+      </div>
+
+      <!-- Recovery Timeline -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.4s both;--feature-glow:rgba(226,75,74,0.15);">
+        <div class="icon-wrap"><i data-lucide="activity" style="width:22px;height:22px;color:var(--sober-accent);"></i></div>
+        <p class="feat-tag">[07] · ciência</p>
+        <h3>recovery timeline</h3>
+        <p>o que tá acontecendo no teu corpo. dia 1: cortisol cai. dia 30: sono melhora. dia 90: dopamina recalibra. baseado em literatura real.</p>
+      </div>
+
+      <!-- Economia Financeira -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.45s both;--feature-glow:rgba(55,138,221,0.15);--feature-icon-bg:rgba(55,138,221,0.12);--feature-icon-border:rgba(55,138,221,0.3);">
+        <div class="icon-wrap"><i data-lucide="trending-up" style="width:22px;height:22px;color:var(--rank-ferro);"></i></div>
+        <p class="feat-tag">[08] · contador</p>
+        <h3>economia financeira</h3>
+        <p>quanto deixou de gastar desde o dia 1. valor por sessão configurável. visualização semanal, mensal, anual. r$ 2.220 médio em 148d.</p>
+      </div>
+
+      <!-- Journal -->
+      <div class="feature-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.5s both;--feature-glow:rgba(170,170,170,0.10);--feature-icon-bg:rgba(170,170,170,0.08);--feature-icon-border:rgba(170,170,170,0.2);">
+        <div class="icon-wrap"><i data-lucide="book-open" style="width:22px;height:22px;color:var(--sober-text-secondary);"></i></div>
+        <p class="feat-tag">[09] · privado</p>
+        <h3>diário de gatilhos</h3>
+        <p>registros de pensamentos, emoções e gatilhos. tudo que você escreve fica com você — armazenamento local + sync criptografado.</p>
+      </div>
+    </div>
+
+    <!-- Roadmap callout -->
+    <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.6s both;margin-top:48px;padding:28px 32px;background:var(--sober-surface);border-radius:8px;border-left:3px solid var(--sober-accent);">
+      <p style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.2em;color:var(--sober-accent);text-transform:uppercase;margin-bottom:10px;">ROADMAP · MAIO–JULHO 2026</p>
+      <p style="font-size:17px;color:var(--sober-text-secondary);line-height:1.7;">prioridade absoluta nas 3 dimensões de interatividade — <strong style="color:#fff;">rituais, biblioteca de técnicas, conquistas comportamentais</strong>. nanos reativos puxados pra Q4. ai chat arquivado até Q2/2027 com advisor clínico.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SEÇÃO 04 — SCREENS (mockups das telas principais)
+═══════════════════════════════════════════════════════════════════ -->
+<section id="screens" style="background:var(--sober-bg);padding:96px 32px;border-top:1px solid rgba(255,255,255,0.05);">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div style="margin-bottom:64px;">
+      <p class="section-index">[04 / 10] · screens</p>
+      <h2 class="display-md" style="margin-bottom:12px;">o app no celular</h2>
+      <p style="font-size:19px;color:var(--sober-text-secondary);max-width:600px;line-height:1.6;">mockups das telas principais. fonte de verdade para landing e store assets. em produção · ios + android.</p>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:32px;justify-content:center;align-items:flex-start;">
+
+      <!-- HOME · screenshot real -->
+      <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.05s both;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="phone-frame" style="width:220px;">
+          <div style="background:#000;border-radius:24px;overflow:hidden;position:relative;">
+            <img src="assets/screens/home.png" alt="Sober · Home" style="display:block;width:100%;height:auto;">
+          </div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;">[01] home</p>
+      </div>
+
+      <!-- DIÁRIO · screenshot real -->
+      <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.1s both;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="phone-frame" style="width:220px;">
+          <div style="background:#000;border-radius:24px;overflow:hidden;position:relative;">
+            <img src="assets/screens/diario.png" alt="Sober · Diário" style="display:block;width:100%;height:auto;">
+          </div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;">[02] diário</p>
+      </div>
+
+      <!-- JORNADA · screenshot real -->
+      <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.15s both;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="phone-frame" style="width:220px;">
+          <div style="background:#000;border-radius:24px;overflow:hidden;position:relative;">
+            <img src="assets/screens/jornada.png" alt="Sober · Jornada" style="display:block;width:100%;height:auto;">
+          </div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;">[03] jornada</p>
+      </div>
+
+      <!-- DESCOBRIR · screenshot real -->
+      <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.25s both;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="phone-frame" style="width:220px;">
+          <div style="background:#000;border-radius:24px;overflow:hidden;position:relative;">
+            <img src="assets/screens/descobrir.png" alt="Sober · Descobrir" style="display:block;width:100%;height:auto;">
+          </div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;">[04] descobrir</p>
+      </div>
+
+      <!-- RANKS · screenshot real (bonus screen — sistema dos 8 nanos) -->
+      <div class="animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.3s both;display:flex;flex-direction:column;align-items:center;gap:12px;">
+        <div class="phone-frame" style="width:220px;">
+          <div style="background:#000;border-radius:24px;overflow:hidden;position:relative;">
+            <img src="assets/screens/ranks.png" alt="Sober · Sistema de ranks" style="display:block;width:100%;height:auto;">
+          </div>
+        </div>
+        <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;">[05] ranks · 8 nanos</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SEÇÃO 05 — PRICING (modelo E)
+═══════════════════════════════════════════════════════════════════ -->
+<section id="pricing" style="background:var(--sober-bg-deep);padding:96px 32px;border-top:1px solid rgba(255,255,255,0.05);">
+  <div style="max-width:1280px;margin:0 auto;">
+
+    <div style="margin-bottom:64px;">
+      <p class="section-index">[05 / 10] · pricing</p>
+      <h2 class="display-md" style="margin-bottom:12px;">modelo E · grátis + apoiador + premium</h2>
+      <p style="font-size:19px;color:var(--sober-text-secondary);max-width:640px;line-height:1.6;">o coração funciona pra todos · pay-what-you-want pra quem quer apoiar · 1–2 features premium pra quem quer ir além.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;">
+
+      <!-- FREE -->
+      <div class="pricing-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.1s both;">
+        <p style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.2em;color:var(--sober-text-muted);text-transform:uppercase;margin-bottom:14px;">[01] · grátis</p>
+        <p style="font-size:32px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1;margin-bottom:6px;">livre.</p>
+        <p style="font-size:13px;color:var(--sober-text-secondary);line-height:1.5;margin-bottom:24px;">tudo que importa funciona. sem paywall no que salva o dia.</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="check" style="width:16px;height:16px;color:var(--sober-success);flex-shrink:0;margin-top:2px;"></i><span>contador, ranks, conquistas</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="check" style="width:16px;height:16px;color:var(--sober-success);flex-shrink:0;margin-top:2px;"></i><span>botão SOS completo</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="check" style="width:16px;height:16px;color:var(--sober-success);flex-shrink:0;margin-top:2px;"></i><span>biblioteca de técnicas</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="check" style="width:16px;height:16px;color:var(--sober-success);flex-shrink:0;margin-top:2px;"></i><span>aba descobrir</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="check" style="width:16px;height:16px;color:var(--sober-success);flex-shrink:0;margin-top:2px;"></i><span>1 grupo de comunidade</span></li>
+        </ul>
+        <button style="width:100%;background:transparent;color:#fff;padding:13px;border:1px solid var(--sober-border);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--sober-accent)'" onmouseout="this.style.borderColor='var(--sober-border)'">começar grátis</button>
+      </div>
+
+      <!-- APOIADOR (featured) -->
+      <div class="pricing-card featured animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.2s both;">
+        <div style="position:absolute;top:-10px;right:24px;background:var(--sober-accent);color:#fff;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;padding:4px 10px;border-radius:4px;">recomendado</div>
+        <p style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.2em;color:var(--sober-accent);text-transform:uppercase;margin-bottom:14px;">[02] · apoiador</p>
+        <p style="font-size:32px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1;margin-bottom:6px;">você decide.</p>
+        <p style="font-size:13px;color:var(--sober-text-secondary);line-height:1.5;margin-bottom:24px;">pague o que quiser, quando quiser. de R$5 a R$50. sem cobrança recorrente forçada.</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="check" style="width:16px;height:16px;color:var(--sober-success);flex-shrink:0;margin-top:2px;"></i><span>tudo do plano grátis</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="heart" style="width:16px;height:16px;color:var(--sober-accent);flex-shrink:0;margin-top:2px;"></i><span>badge "apoiador" no perfil</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="heart" style="width:16px;height:16px;color:var(--sober-accent);flex-shrink:0;margin-top:2px;"></i><span>acesso antecipado a novas features</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="heart" style="width:16px;height:16px;color:var(--sober-accent);flex-shrink:0;margin-top:2px;"></i><span>ajuda a manter o app vivo</span></li>
+        </ul>
+        <button style="width:100%;background:var(--sober-accent);color:#fff;padding:13px;border:none;border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:opacity 0.2s;" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">apoiar o sober</button>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="pricing-card animate-on-scroll" style="animation:fadeSlideIn 0.8s var(--ease-out-quint) 0.3s both;">
+        <p style="font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.2em;color:var(--rank-onix);text-transform:uppercase;margin-bottom:14px;">[03] · premium</p>
+        <p style="font-size:32px;font-weight:700;color:#fff;letter-spacing:-0.03em;line-height:1;margin-bottom:6px;">R$ <span style="color:var(--rank-onix);">19</span><span style="font-size:14px;color:#666;font-weight:500;">/mês</span></p>
+        <p style="font-size:13px;color:var(--sober-text-secondary);line-height:1.5;margin-bottom:24px;">para quem quer ir além. sem trial pegajoso, cancela quando quiser.</p>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="check" style="width:16px;height:16px;color:var(--sober-success);flex-shrink:0;margin-top:2px;"></i><span>tudo do apoiador</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="zap" style="width:16px;height:16px;color:var(--rank-onix);flex-shrink:0;margin-top:2px;"></i><span>relatórios mensais detalhados</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="zap" style="width:16px;height:16px;color:var(--rank-onix);flex-shrink:0;margin-top:2px;"></i><span>grupos ilimitados</span></li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#AAA;align-items:flex-start;"><i data-lucide="zap" style="width:16px;height:16px;color:var(--rank-onix);flex-shrink:0;margin-top:2px;"></i><span>backup criptografado em nuvem</span></li>
+        </ul>
+        <button style="width:100%;background:transparent;color:var(--rank-onix);padding:13px;border:1px solid rgba(127,119,221,0.4);border-radius:10px;font-size:13px;font-weight:600;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='var(--rank-onix)'" onmouseout="this.style.borderColor='rgba(127,119,221,0.4)'">testar premium</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════════════════ -->
+<footer style="background:var(--sober-bg);padding:64px 32px 48px;border-top:1px solid rgba(255,255,255,0.08);text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;position:relative;overflow:hidden;">
+  <div class="ghost-type" style="bottom:-30%;left:50%;transform:translateX(-50%);font-size:clamp(4rem,8vw,8rem);opacity:0.3;">sober</div>
+
+  <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:center;position:relative;z-index:1;">
+    <a href="/legal.html#privacidade" style="font-family:var(--mono);font-size:11px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;text-decoration:none;border-bottom:1px solid transparent;transition:color 0.2s,border-color 0.2s;" onmouseover="this.style.color='var(--sober-accent)';this.style.borderBottomColor='var(--sober-accent)'" onmouseout="this.style.color='var(--sober-text-muted)';this.style.borderBottomColor='transparent'">privacidade</a>
+    <a href="/legal.html#termos" style="font-family:var(--mono);font-size:11px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;text-decoration:none;border-bottom:1px solid transparent;transition:color 0.2s,border-color 0.2s;" onmouseover="this.style.color='var(--sober-accent)';this.style.borderBottomColor='var(--sober-accent)'" onmouseout="this.style.color='var(--sober-text-muted)';this.style.borderBottomColor='transparent'">termos</a>
+    <a href="mailto:contato@soberapp.com.br" style="font-family:var(--mono);font-size:11px;letter-spacing:0.15em;color:var(--sober-text-muted);text-transform:uppercase;text-decoration:none;border-bottom:1px solid transparent;transition:color 0.2s,border-color 0.2s;" onmouseover="this.style.color='var(--sober-accent)';this.style.borderBottomColor='var(--sober-accent)'" onmouseout="this.style.color='var(--sober-text-muted)';this.style.borderBottomColor='transparent'">contato</a>
+  </div>
+
+  <p style="font-family:var(--mono);font-size:10px;letter-spacing:0.2em;color:var(--sober-text-dim);text-transform:uppercase;position:relative;z-index:1;margin-top:8px;">sober · supernano · brasília · 2026</p>
+</footer>
+
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     SCRIPTS
+═══════════════════════════════════════════════════════════════════ -->
+<script>
+// ── Lucide icons ──
+lucide.createIcons();
+
+// ── Re-init observer for dynamic elements ──
+initInViewAnimations();
+</script>
+
 </body>
 </html>
