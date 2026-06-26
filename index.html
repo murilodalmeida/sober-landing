@@ -800,6 +800,116 @@
     .ops-bar { font-size: 9px; gap: 8px; }
     .display-xl { font-size: clamp(3.5rem, 15vw, 5.5rem); }
   }
+
+  /* ============================================================
+     ANÚNCIO DE DOWNLOAD (componentes "sa-") — aditivo, gateado por data via JS.
+     Press Start 2P já carregada no <link> do head. z-index acima da nav (100).
+     ============================================================ */
+  :root {
+    --sa-preto: #0d0d0d;
+    --sa-pergaminho: #141414;
+    --sa-pergaminho-borda: #2a2a2a;
+    --sa-texto: #ffffff;
+    --sa-texto-suave: #a8a8a8;
+    --sa-azul: #378ADD;
+    --sa-dourado: #EF9F27;
+    --sa-verde-ok: #4ade80;
+    --sa-aviso: #EF9F27;
+  }
+  .sa-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.82); backdrop-filter: blur(3px);
+    z-index: 1100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px; animation: sa-fadeIn 0.3s ease;
+  }
+  .sa-overlay.sa-hidden { display: none; }
+  @keyframes sa-fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes sa-slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .sa-pergaminho {
+    position: relative; width: 100%; max-width: 380px; max-height: 90vh;
+    overflow-y: auto; background: var(--sa-pergaminho);
+    border: 3px solid var(--sa-pergaminho-borda);
+    box-shadow: 0 0 0 3px var(--sa-preto), 0 0 0 6px var(--sa-pergaminho-borda), 0 12px 40px rgba(0,0,0,0.6);
+    padding: 28px 22px 24px; animation: sa-slideUp 0.35s ease; image-rendering: pixelated;
+  }
+  .sa-pergaminho::-webkit-scrollbar { width: 6px; }
+  .sa-pergaminho::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+  .sa-btn-fechar {
+    position: absolute; top: 12px; right: 12px; width: 34px; height: 34px;
+    background: var(--sa-preto); border: 2px solid var(--sa-pergaminho-borda);
+    color: var(--sa-texto-suave); font-family: 'Press Start 2P', monospace; font-size: 12px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.15s; z-index: 2;
+  }
+  .sa-btn-fechar:hover { background: #2a1010; color: #ff6b6b; border-color: #ff6b6b; }
+  .sa-btn-fechar:active { transform: scale(0.92); }
+  .sa-titulo {
+    font-family: 'Press Start 2P', monospace; font-size: 18px; color: var(--sa-texto);
+    text-align: center; letter-spacing: 2px; margin-bottom: 8px; margin-top: 4px;
+  }
+  .sa-subtitulo {
+    font-size: 13px; color: var(--sa-texto-suave); text-align: center;
+    margin-bottom: 22px; line-height: 1.4;
+  }
+  .sa-plataforma-badge {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: 'Press Start 2P', monospace; font-size: 9px; color: var(--sa-texto-suave);
+    background: var(--sa-preto); border: 1px solid var(--sa-pergaminho-borda);
+    padding: 8px 12px; margin-bottom: 20px; text-align: center;
+  }
+  .sa-passo { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
+  .sa-passo-num {
+    flex-shrink: 0; width: 28px; height: 28px; background: var(--sa-azul); color: #fff;
+    font-family: 'Press Start 2P', monospace; font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid rgba(255,255,255,0.15);
+  }
+  .sa-passo.sa-android .sa-passo-num { background: var(--sa-dourado); }
+  .sa-passo-conteudo { flex: 1; padding-top: 2px; }
+  .sa-passo-titulo { font-size: 14px; color: var(--sa-texto); font-weight: 600; margin-bottom: 4px; line-height: 1.3; }
+  .sa-passo-desc { font-size: 12.5px; color: var(--sa-texto-suave); line-height: 1.45; }
+  .sa-btn-acao {
+    display: block; width: 100%; background: var(--sa-azul); color: #fff;
+    font-family: 'Press Start 2P', monospace; font-size: 11px; text-align: center;
+    text-decoration: none; padding: 14px; margin-top: 6px; border: none; cursor: pointer;
+    letter-spacing: 1px; transition: all 0.15s; line-height: 1.5;
+  }
+  .sa-btn-acao:hover { filter: brightness(1.15); }
+  .sa-btn-acao:active { transform: scale(0.98); }
+  .sa-btn-acao.sa-android { background: var(--sa-dourado); color: #1a1a1a; }
+  .sa-nota-seguranca {
+    display: flex; gap: 8px; font-size: 11.5px; color: var(--sa-texto-suave);
+    background: rgba(74,222,128,0.08); border-left: 3px solid var(--sa-verde-ok);
+    padding: 10px 12px; margin: 8px 0 4px; line-height: 1.4;
+  }
+  .sa-nota-aviso {
+    display: flex; gap: 8px; font-size: 11.5px; color: #f0d090;
+    background: rgba(239,159,39,0.1); border-left: 3px solid var(--sa-aviso);
+    padding: 10px 12px; margin: 8px 0 4px; line-height: 1.4;
+  }
+  .sa-trocar-plataforma { text-align: center; margin-top: 16px; font-size: 11px; }
+  .sa-trocar-plataforma a { color: var(--sa-texto-suave); text-decoration: underline; cursor: pointer; }
+  .sa-trocar-plataforma a:hover { color: var(--sa-texto); }
+  .sa-fab {
+    position: fixed; bottom: 20px; right: 20px; background: var(--sa-azul); color: #fff;
+    font-family: 'Press Start 2P', monospace; font-size: 10px; padding: 14px 16px;
+    border: 3px solid rgba(255,255,255,0.2);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 3px var(--sa-preto);
+    cursor: pointer; z-index: 1090; display: flex; align-items: center; gap: 8px;
+    animation: sa-fabPulse 2s infinite; transition: transform 0.15s;
+  }
+  .sa-fab.sa-hidden { display: none; }
+  .sa-fab:hover { filter: brightness(1.15); }
+  .sa-fab:active { transform: scale(0.95); }
+  @keyframes sa-fabPulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 3px var(--sa-preto), 0 0 0 0 rgba(55,138,221,0.5); }
+    50% { box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 3px var(--sa-preto), 0 0 0 12px rgba(55,138,221,0); }
+  }
+  .sa-hidden { display: none !important; }
 </style>
 
 <script>
@@ -1398,6 +1508,137 @@ lucide.createIcons();
 
 // ── Re-init observer for dynamic elements ──
 initInViewAnimations();
+</script>
+
+<!-- ============================================================
+     ANÚNCIO DE DOWNLOAD — aditivo, gateado por data (ver script).
+     Não toca o form de waitlist (Web3Forms). Sem form/input/submit.
+     ============================================================ -->
+<div class="sa-overlay sa-hidden" id="sa-overlay">
+  <div class="sa-pergaminho">
+    <button class="sa-btn-fechar" type="button" aria-label="Fechar">✕</button>
+    <div class="sa-titulo">SOBER</div>
+    <div class="sa-subtitulo">Você está quase dentro.<br>Siga os passos pra baixar o app.</div>
+    <div class="sa-plataforma-badge" id="sa-badge">
+      <span id="sa-badge-texto">DETECTANDO SEU APARELHO...</span>
+    </div>
+    <!-- ===== CAMINHO iOS ===== -->
+    <div id="sa-caminho-ios" class="sa-hidden">
+      <div class="sa-passo">
+        <div class="sa-passo-num">1</div>
+        <div class="sa-passo-conteudo">
+          <div class="sa-passo-titulo">Instale o TestFlight</div>
+          <div class="sa-passo-desc">É o app oficial da Apple pra testar apps. Toque abaixo e instale na App Store.</div>
+          <a href="https://apps.apple.com/app/testflight/id899247664" class="sa-btn-acao" target="_blank" rel="noopener">▸ ABRIR TESTFLIGHT</a>
+        </div>
+      </div>
+      <div class="sa-passo">
+        <div class="sa-passo-num">2</div>
+        <div class="sa-passo-conteudo">
+          <div class="sa-passo-titulo">Entre no Sober</div>
+          <div class="sa-passo-desc">Com o TestFlight já instalado, toque aqui pra baixar o Sober.</div>
+          <a href="https://testflight.apple.com/join/QgMnecqE" class="sa-btn-acao" target="_blank" rel="noopener" id="sa-link-testflight">▸ BAIXAR O SOBER</a>
+        </div>
+      </div>
+      <div class="sa-nota-seguranca">
+        <span>🛡️</span>
+        <span>O TestFlight é da própria Apple. É 100% seguro — é assim que apps em teste são distribuídos no iPhone.</span>
+      </div>
+    </div>
+    <!-- ===== CAMINHO ANDROID ===== -->
+    <div id="sa-caminho-android" class="sa-hidden">
+      <div class="sa-passo sa-android">
+        <div class="sa-passo-num">1</div>
+        <div class="sa-passo-conteudo">
+          <div class="sa-passo-titulo">Baixe o app</div>
+          <div class="sa-passo-desc">Toque abaixo. O download do Sober vai começar.</div>
+          <a href="https://github.com/murilodalmeida/sober-landing/releases/download/v-evento-2026-06/sober.apk" class="sa-btn-acao sa-android" target="_blank" rel="noopener" id="sa-link-apk">▸ BAIXAR O SOBER</a>
+        </div>
+      </div>
+      <div class="sa-passo sa-android">
+        <div class="sa-passo-num">2</div>
+        <div class="sa-passo-conteudo">
+          <div class="sa-passo-titulo">Permita a instalação</div>
+          <div class="sa-passo-desc">O Android vai mostrar um aviso. Toque em <b>"Configurações"</b>, ative <b>"Permitir desta fonte"</b>, volte e instale.</div>
+        </div>
+      </div>
+      <div class="sa-nota-aviso">
+        <span>⚠️</span>
+        <span>Esse aviso aparece pra <b>todo</b> app fora da Play Store — não é vírus. O Sober é seguro, é só como o Android trata apps em teste.</span>
+      </div>
+    </div>
+    <div class="sa-trocar-plataforma">
+      <a id="sa-trocar-link">tenho outro aparelho</a>
+    </div>
+  </div>
+</div>
+<div class="sa-fab sa-hidden" id="sa-fab">
+  <span>📥</span>
+  <span>BAIXAR APP</span>
+</div>
+
+<script>
+(function() {
+  // ===== GATING POR DATA DO EVENTO (editar aqui) =====
+  const EVENTO_INICIO = new Date('2026-06-27T00:00:00-03:00');
+  const EVENTO_FIM    = new Date('2026-07-01T23:59:59-03:00');
+  const preview = new URLSearchParams(location.search).has('preview');
+  const agora = new Date();
+  const dentroDaJanela = agora >= EVENTO_INICIO && agora <= EVENTO_FIM;
+  // Fora da janela e sem ?preview: não mostra modal NEM FAB — landing normal (só waitlist).
+  if (!preview && !dentroDaJanela) return;
+
+  const overlay = document.getElementById('sa-overlay');
+  const fab = document.getElementById('sa-fab');
+  if (!overlay || !fab) return;
+
+  let plataformaAtual = null;
+
+  function detectarPlataforma() {
+    const ua = navigator.userAgent || navigator.vendor || window.opera || '';
+    if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) return 'ios';
+    if (/android/i.test(ua)) return 'android';
+    return 'desconhecido';
+  }
+
+  function mostrarCaminho(plataforma) {
+    plataformaAtual = plataforma;
+    const ios = document.getElementById('sa-caminho-ios');
+    const android = document.getElementById('sa-caminho-android');
+    const badgeTexto = document.getElementById('sa-badge-texto');
+    ios.classList.add('sa-hidden');
+    android.classList.add('sa-hidden');
+    if (plataforma === 'android') {
+      android.classList.remove('sa-hidden');
+      badgeTexto.textContent = '📱 APARELHO ANDROID DETECTADO';
+    } else {
+      ios.classList.remove('sa-hidden');
+      badgeTexto.textContent = plataforma === 'ios'
+        ? '🍎 IPHONE DETECTADO'
+        : '💻 ESCOLHA SEU APARELHO ABAIXO';
+    }
+  }
+
+  function alternarPlataforma() {
+    mostrarCaminho(plataformaAtual === 'android' ? 'ios' : 'android');
+  }
+  function fecharAnuncio() {
+    overlay.classList.add('sa-hidden');
+    fab.classList.remove('sa-hidden');
+  }
+  function abrirAnuncio() {
+    overlay.classList.remove('sa-hidden');
+    fab.classList.add('sa-hidden');
+  }
+
+  overlay.querySelector('.sa-btn-fechar').addEventListener('click', fecharAnuncio);
+  document.getElementById('sa-trocar-link').addEventListener('click', alternarPlataforma);
+  fab.addEventListener('click', abrirAnuncio);
+  overlay.addEventListener('click', function(e) { if (e.target === this) fecharAnuncio(); });
+
+  mostrarCaminho(detectarPlataforma());
+  abrirAnuncio(); // auto-abre dentro da janela do evento / em ?preview
+})();
 </script>
 
 </body>
