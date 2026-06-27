@@ -909,6 +909,12 @@
     0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 3px var(--sa-preto), 0 0 0 0 rgba(55,138,221,0.5); }
     50% { box-shadow: 0 4px 16px rgba(0,0,0,0.5), 0 0 0 3px var(--sa-preto), 0 0 0 12px rgba(55,138,221,0); }
   }
+  .sa-sobre { background: var(--sa-preto); border: 1px solid var(--sa-pergaminho-borda); border-left: 3px solid var(--sa-azul); padding: 14px 16px; margin-bottom: 20px; }
+  .sa-sobre-titulo { font-family: 'Press Start 2P', monospace; font-size: 10px; color: var(--sa-azul); letter-spacing: 1px; margin-bottom: 10px; }
+  .sa-sobre-texto { font-size: 13px; color: var(--sa-texto-suave); line-height: 1.5; margin: 0 0 10px; }
+  .sa-sobre-texto:last-child { margin-bottom: 0; }
+  .sa-sobre-texto b { color: var(--sa-texto); }
+  .sa-beta-aviso { font-size: 10.5px; color: #888; text-align: center; margin-top: 14px; line-height: 1.4; }
   .sa-hidden { display: none !important; }
 </style>
 
@@ -1519,6 +1525,11 @@ initInViewAnimations();
     <button class="sa-btn-fechar" type="button" aria-label="Fechar">✕</button>
     <div class="sa-titulo">SOBER</div>
     <div class="sa-subtitulo">Você está quase dentro.<br>Siga os passos pra baixar o app.</div>
+    <div class="sa-sobre">
+      <div class="sa-sobre-titulo">O QUE É O SOBER?</div>
+      <p class="sa-sobre-texto">Um app pra largar um hábito ruim e transformar em algo melhor — beber, fumar, o que você quiser deixar pra trás. Cada dia que você segura vira <b>sequência</b>, sobe de <b>rank</b>, e mostra o <b>dinheiro</b> que você tá economizando.</p>
+      <p class="sa-sobre-texto">Recaiu? Você não volta ao zero. Um capítulo fecha, o próximo começa — sem culpa, sem sermão.</p>
+    </div>
     <div class="sa-plataforma-badge" id="sa-badge">
       <span id="sa-badge-texto">DETECTANDO SEU APARELHO...</span>
     </div>
@@ -1567,6 +1578,7 @@ initInViewAnimations();
         <span>Esse aviso aparece pra <b>todo</b> app fora da Play Store — não é vírus. O Sober é seguro, é só como o Android trata apps em teste.</span>
       </div>
     </div>
+    <div class="sa-beta-aviso">App em teste (beta). Seu progresso é salvo — se notar algo estranho, fala com a gente.</div>
     <div class="sa-trocar-plataforma">
       <a id="sa-trocar-link">tenho outro aparelho</a>
     </div>
